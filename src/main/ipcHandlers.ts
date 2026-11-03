@@ -4,6 +4,7 @@ import { saveSecureApiKey, getSecureApiKeyStatus, getSecureApiKey } from './secu
 import { isWhatsAppRunning } from './whatsapp';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from './db';
+import { GEMINI_MODEL } from './config';
 
 export function setupIpcHandlers() {
   ipcMain.handle('save-api-key', async (_, apiKey: string) => {
@@ -67,7 +68,7 @@ export function setupIpcHandlers() {
 
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: GEMINI_MODEL,
         contents: 'Réponds uniquement par "OK".',
       });
       

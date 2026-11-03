@@ -1,6 +1,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { getSecureApiKey } from './security';
 import { getDb } from './db';
+import { GEMINI_MODEL } from './config';
 
 export async function getMemoryString(contactId: string) {
   try {
@@ -25,11 +26,10 @@ export async function generateLeaResponse(contactId: string, recentContext: stri
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: GEMINI_MODEL,
       contents: fullPrompt,
       config: {
         systemInstruction: LEA_SYSTEM_PROMPT,
-        temperature: 0.7,
       }
     });
     return response.text;
