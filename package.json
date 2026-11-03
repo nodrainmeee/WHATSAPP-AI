@@ -1,0 +1,68 @@
+{
+  "name": "whatsapp-ai-assistant",
+  "productName": "WhatsApp AI Assistant",
+  "version": "2.0.0",
+  "description": "Assistant IA indépendant pour WhatsApp Messenger propulsé par Gemini",
+  "main": "dist/main/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build:react": "vite build",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "build": "npm run build:react && npm run build:electron",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder --win --publish never",
+    "postinstall": "electron-builder install-app-deps",
+    "start": "npm run build && electron ."
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "better-sqlite3": "^11.1.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.22.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/node": "^20.12.0",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react": "^4.2.1",
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3",
+    "typescript": "^5.4.2",
+    "vite": "^5.2.0"
+  },
+  "build": {
+    "appId": "com.jeaneudes.whatsappai",
+    "productName": "WhatsApp AI Assistant",
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "resources/icon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "WhatsApp AI (Léa)",
+      "uninstallDisplayName": "Désinstaller WhatsApp AI"
+    },
+    "extraResources": [
+      {
+        "from": "resources",
+        "to": "resources"
+      }
+    ],
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ]
+  },
+  "author": "Jean Eudes"
+}
