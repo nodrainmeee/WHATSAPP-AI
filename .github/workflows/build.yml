@@ -1,0 +1,35 @@
+name: Build Windows Application (Léa)
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Récupération du code source
+        uses: actions/checkout@v4
+
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Installation des dépendances
+        run: npm install --no-audit --no-fund
+
+      - name: Compilation et génération du fichier EXE
+        run: npm run dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sauvegarde de l'installateur (.exe)
+        uses: actions/upload-artifact@v4
+        with:
+          name: WhatsApp-AI-Assistant-Setup
+          path: release/*.exe
+          if-no-files-found: error
+          retention-days: 7
